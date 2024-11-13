@@ -28,15 +28,23 @@ dotnet dev-certs https --trust
 
 ## Gestion des Outils
 
-### Désinstaller et Installer le Générateur de Code ASP.NET
+### Désinstaller Générateur de Code ASP.NET
 ```bash
 dotnet tool uninstall --global dotnet-aspnet-codegenerator
+```
+
+### Installer le Générateur de Code ASP.NET
+```bash
 dotnet tool install --global dotnet-aspnet-codegenerator
 ```
 
-### Désinstaller et Installer les Outils Entity Framework Core
+### Désinstaller  les Outils Entity Framework Core
 ```bash
 dotnet tool uninstall --global dotnet-ef
+```
+
+### Installer les Outils Entity Framework Core
+```bash
 dotnet tool install --global dotnet-ef
 ```
 
