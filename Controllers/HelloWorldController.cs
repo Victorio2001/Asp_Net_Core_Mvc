@@ -18,14 +18,18 @@ public class HelloWorldController : Controller
 
     /// <summary>
     /// GET: /HelloWorld/Welcome?nom=Rick&nombre=4.
+    /// GET: /HelloWorld/Welcome
     /// </summary>
     /// <param name="nom"></param>
     /// <param name="nombre"></param>
     /// <returns></returns>
-    public string Welcome(string nom = "victorio", int nombre = 1) //Defult value
+    public IActionResult Welcome(string nom = "victorio", int nombre = 1) //Defult value
     {
+        ViewData["nombre"] = nombre;
+        ViewData["Message"] = "Welcome " + nom + " " + nombre;
         //! Utilise HtmlEncoder.Default.Encode pour protéger l’application contre les entrées malveillantes, par exemple via JavaScript.
         var date = DateTime.Now;
-        return HtmlEncoder.Default.Encode($"Salut {nom}, Numero: {nombre}, il est {date}");
+        //return HtmlEncoder.Default.Encode($"Salut {nom}, Numero: {nombre}, il est {date}");
+        return View();
     }
 }

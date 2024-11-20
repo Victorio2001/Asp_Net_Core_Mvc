@@ -1,0 +1,13 @@
+﻿@{
+    //! la Var --Title-- provient de _layout.cshtml
+    ViewData["Title"] = "Movie List";
+}
+
+<h2>Bienvenue Mannn</h2>
+
+<ul>
+    @for (int i = 0; i < (int)ViewData["Nombre"]!; i++)
+    {
+    <li>@ViewData["Message"]</li>
+    }
+</ul>
