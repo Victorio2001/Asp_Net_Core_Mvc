@@ -76,18 +76,6 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 dotnet add package Microsoft.EntityFrameworkCore.Tools
 ```
 
-## Générer des Pages Razor
-
-### Générer un Crud Total pour le Modèle `Film`
-```bash
-dotnet aspnet-codegenerator razorpage -m Movie -dc RazorPagesMovie.Data.RazorPagesMovieContext -udl -outDir Pages/Movies --referenceScriptLibraries --databaseProvider sqlite
-```
-
-### Utilisez l’option -h pour obtenir de l’aide sur la commande
-```bash
-dotnet aspnet-codegenerator razorpage -h
-```
-
 ## Migrations
 
 ### Génère le code nécessaire à la création du schéma de base de données initial. Le schéma est basé sur le modèle spécifié dans DbContext.
