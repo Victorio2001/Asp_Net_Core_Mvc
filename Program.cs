@@ -20,8 +20,10 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+//! Nôtre point de Spawn.
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    //[Controller]/[ActionName]/[Parameters]
+    pattern: "{controller=HelloWorld}/{action=Index}/{id?}"); //? Le ? de fin (dans id?) indique que le paramètre id est facultatif.
 
 app.Run();

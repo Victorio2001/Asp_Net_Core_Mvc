@@ -1,4 +1,5 @@
-https://docs.google.com/document/d/1pQ6whUMU-qRZBEJi2MilWi8ZapFWuD8kSKRJnn9XmR8/edit?u
+#### https://docs.google.com/document/d/1pQ6whUMU-qRZBEJi2MilWi8ZapFWuD8kSKRJnn9XmR8/edit?u
+#### https://learn.microsoft.com/fr-fr/aspnet/core/tutorials/first-mvc-app/start-mvc?view=aspnetcore-9.0&WT.mc_id=dotnet-35129-website&tabs=visual-studio
 ## Commandes pour Commencer
 
 ### Créer une Nouvelle Application Web
