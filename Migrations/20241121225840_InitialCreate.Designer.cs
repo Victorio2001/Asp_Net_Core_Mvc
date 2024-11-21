@@ -12,7 +12,7 @@ using NomDuProjet.Data;
 namespace NomDuProjet.Migrations
 {
     [DbContext(typeof(NomDuProjetContext))]
-    [Migration("20241120224014_InitialCreate")]
+    [Migration("20241121225840_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

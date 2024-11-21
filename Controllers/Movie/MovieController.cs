@@ -13,7 +13,8 @@ namespace NomDuProjet.Controllers
     public class MovieController : Controller
     {
         private readonly NomDuProjetContext _context;
-
+        
+        //! Le contexte de base de données est utilisé dans chacune des méthodes la CRUD du contrôleur.
         public MovieController(NomDuProjetContext context)
         {
             _context = context;
@@ -33,14 +34,14 @@ namespace NomDuProjet.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movie
+            var caca = await _context.Movie
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (movie == null)
+            if (caca == null)
             {
                 return NotFound();
             }
 
-            return View(movie);
+            return View(caca);
         }
 
         // GET: Movie/Create
