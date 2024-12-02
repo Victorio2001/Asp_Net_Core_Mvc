@@ -1,6 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NomDuProjet.Data;
+using NomDuProjet.Models;
+using NomDuProjet.Models.SeedData;
+
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<NomDuProjetContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("NomDuProjetContext") ?? throw new InvalidOperationException("Connection string 'NomDuProjetContext' not found.")));
@@ -9,6 +13,14 @@ builder.Services.AddDbContext<NomDuProjetContext>(options =>
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+//! fixtures || SeedData
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    SeedData.Initialize(services);
+}
+//! fixtures || SeedData
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
