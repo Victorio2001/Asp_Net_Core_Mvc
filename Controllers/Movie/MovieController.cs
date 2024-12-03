@@ -109,7 +109,7 @@ namespace NomDuProjet.Controllers.Movie
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) //! La propriété ModelState.IsValid vérifie que les données envoyées dans le formulaire peuvent être utilisées pour changer (modifier ou mettre à jour) un objet Movie
             {
                 try
                 {
