@@ -87,3 +87,23 @@ dotnet ef migrations add InitialCreate
 ```bash 
 dotnet ef database update -- Atteantion pas de "dotnet watch run" sinon conflit
 ```
+
+## Repository
+### Architecture fichier
+```bash 
+NomDuProjet/
+├── Controllers/
+│   ├── Movie/
+│   │   ├── CreateMovieController.cs
+│   │   ├── EditMovieController.cs
+├── Data/
+│   ├── NomDuProjetContext.cs
+│   ├── Repositories/
+│   │   ├── IMovieRepository.cs
+│   │   ├── MovieRepository.cs
+├── Models/
+│   ├── Movie.cs
+│   ├── User.cs
+├── Views/
+│   ├── Movie/
+```

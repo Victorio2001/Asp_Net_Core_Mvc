@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NomDuProjet.Data;
+using NomDuProjet.Data.Repositories;
 using NomDuProjet.Models;
 using NomDuProjet.Models.SeedData;
 
@@ -11,6 +12,8 @@ builder.Services.AddDbContext<NomDuProjetContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+
 
 var app = builder.Build();
 
@@ -41,6 +44,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     //[Controller]/[ActionName]/[Parameters]
-    pattern: "{controller=HelloWorld}/{action=Index}/{id?}"); //? Le ? de fin (dans id?) indique que le paramètre id est facultatif.
+    pattern: "{controller=Movie}/{action=Index}/{id?}"); //? Le ? de fin (dans id?) indique que le paramètre id est facultatif.
 
 app.Run();

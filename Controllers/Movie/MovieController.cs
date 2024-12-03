@@ -5,25 +5,32 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NomDuProjet.Models;
-using NomDuProjet.Data;
 
-namespace NomDuProjet.Controllers
+using NomDuProjet.Data;
+using NomDuProjet.Data.Repositories;
+
+namespace NomDuProjet.Controllers.Movie
 {
     public class MovieController : Controller
     {
         private readonly NomDuProjetContext _context;
+        private readonly IMovieRepository _movieRepository;
+
         
         //! Le contexte de base de données est utilisé dans chacune des méthodes la CRUD du contrôleur.
-        public MovieController(NomDuProjetContext context)
+        public MovieController(NomDuProjetContext context, IMovieRepository movieRepository)
         {
             _context = context;
+            _movieRepository = movieRepository;
         }
 
         // GET: Movie
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Movie.ToListAsync());
+            var movies = await _movieRepository.GetAllMoviesAsync();
+            return View(movies);
         }
 
         // GET: Movie/Details/5
@@ -55,7 +62,7 @@ namespace NomDuProjet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price")] Models.Movie movie)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +94,7 @@ namespace NomDuProjet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price")] Models.Movie movie)
         {
             if (id != movie.Id)
             {
