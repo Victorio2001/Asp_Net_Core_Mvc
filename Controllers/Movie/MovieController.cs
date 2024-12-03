@@ -27,6 +27,13 @@ namespace NomDuProjet.Controllers.Movie
             _context = context;
             _movieRepository = movieRepository;
         }
+        
+        [HttpPost]
+        public string Index(string searchTerm, bool notUsed)
+        {
+            Console.WriteLine($"{searchTerm}");
+            return "From [HttpPost]Index: filter on " + searchTerm;
+        }
 
         // GET: Movie
         [HttpGet]
