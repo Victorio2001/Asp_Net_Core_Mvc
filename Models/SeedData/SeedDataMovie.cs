@@ -11,9 +11,7 @@ public static class SeedData
 {
     public static void Initialize(IServiceProvider serviceProvider)
     {
-        using (var context = new NomDuProjetContext(
-                   serviceProvider.GetRequiredService<
-                       DbContextOptions<NomDuProjetContext>>()))
+        using (var context = new NomDuProjetContext(serviceProvider.GetRequiredService<DbContextOptions<NomDuProjetContext>>()))
         {
             //? check si y'à des films en bdd
             if (context.Movie.Any())

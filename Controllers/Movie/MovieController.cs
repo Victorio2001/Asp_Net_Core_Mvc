@@ -17,6 +17,7 @@ namespace NomDuProjet.Controllers.Movie
     {
         //! inutile puisque gérer dans le repo
         //private readonly NomDuProjetContext _context;
+        
         private readonly IMovieRepository _movieRepository;
 
         
@@ -28,6 +29,7 @@ namespace NomDuProjet.Controllers.Movie
         }
 
         // GET: Movie
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var movies = await _movieRepository.GetAllMoviesAsync();
@@ -35,6 +37,7 @@ namespace NomDuProjet.Controllers.Movie
         }
 
         // GET: Movie/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             // Vérifie si l'ID est null
@@ -55,6 +58,7 @@ namespace NomDuProjet.Controllers.Movie
         }
 
         // GET: Movie/Create
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -66,6 +70,7 @@ namespace NomDuProjet.Controllers.Movie
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price")] Models.Movie movie)
+        //! Vous devez inclure dans l’attribut [Bind] uniquement les propriétés que vous souhaitez modifier.
         {
             if (ModelState.IsValid)
             {
@@ -75,7 +80,9 @@ namespace NomDuProjet.Controllers.Movie
             return View(movie);
         }
 
+        
         // GET: Movie/Edit/5
+        [HttpGet] //! Vous pouvez appliquer l’attribut [HttpGet] à la première méthode Edit, mais cela n’est pas nécessaire car [HttpGet] est la valeur par défau
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -94,7 +101,7 @@ namespace NomDuProjet.Controllers.Movie
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken] //! utilisé pour lutter contre la falsification d’une requête. Il est associé à un jeton anti-falsification généré dans le fichier de la vue de modification
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price")] Models.Movie movie)
         {
             if (id != movie.Id)
@@ -152,7 +159,7 @@ namespace NomDuProjet.Controllers.Movie
 
         private bool MovieExists(int id)
         {
-            return _context.Movie.Any(e => e.Id == id);
+            return _movieRepository.GetExisting(id);
         }
     }
 }

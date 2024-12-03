@@ -49,9 +49,8 @@ public class MovieRepository : IMovieRepository
             }
         }
 
-        public Task GetExisting(int id)
+        public bool GetExisting(int id)
         {
             return  _context.Movie.Any(e => e.Id == id);
-
         }
 }

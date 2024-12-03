@@ -15,7 +15,8 @@ namespace NomDuProjet.Data
         {
         }
 
-        //! définition des entity à migrer
+        //! définition des entity à migrer + lien entre mes objets et tables
+        //? DbSet fournis les outils crud comme doctrinne en php
         public DbSet<Movie> Movie { get; set; } = default!;
         public DbSet<User> User { get; set; } = default!;
     }
