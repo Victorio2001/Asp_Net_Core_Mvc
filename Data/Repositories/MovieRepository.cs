@@ -12,6 +12,22 @@ public class MovieRepository : IMovieRepository
             _context = context;
         }
 
+        public async Task<IEnumerable<Movie>> SearchMoviesAsync(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                Console.WriteLine($"T'es dans le get all bouffon");
+                Console.WriteLine($" Repository GetAll Recherche pour : {searchTerm}");
+                return await GetAllMoviesAsync(); 
+            }
+            Console.WriteLine($" Repository Recherche pour : {searchTerm}");
+            return await _context.Movie
+                .Where(s => s.Title!.ToUpper().Contains(searchTerm.ToUpper()))
+                .ToListAsync(); 
+        }
+
+
+
         public async Task<IEnumerable<Movie>> GetAllMoviesAsync()
         {
             return await _context.Movie.ToListAsync();

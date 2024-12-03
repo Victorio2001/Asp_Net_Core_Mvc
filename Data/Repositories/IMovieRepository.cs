@@ -8,5 +8,6 @@ public interface IMovieRepository
     Task AddMovieAsync(Movie movie);
     Task UpdateMovieAsync(Movie movie);
     Task DeleteMovieAsync(int id);
+    Task<IEnumerable<Movie>> SearchMoviesAsync(string searchTerm);
     bool GetExisting(int id);
 }

@@ -16,23 +16,29 @@ namespace NomDuProjet.Controllers.Movie
     public class MovieController : Controller
     {
         //! inutile puisque gérer dans le repo
-        //private readonly NomDuProjetContext _context;
+        private readonly NomDuProjetContext _context;
         
         private readonly IMovieRepository _movieRepository;
 
         
         //! Le contexte de base de données est utilisé dans chacune des méthodes la CRUD du contrôleur.
-        public MovieController(/*NomDuProjetContext context,*/ IMovieRepository movieRepository)
+        public MovieController(NomDuProjetContext context, IMovieRepository movieRepository)
         {
-           //_context = context;
+            _context = context;
             _movieRepository = movieRepository;
         }
 
         // GET: Movie
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm)
         {
-            var movies = await _movieRepository.GetAllMoviesAsync();
+            Console.WriteLine($" Controller Recherche pour : {searchTerm}");
+            if (_context.Movie == null)
+            {
+                return Problem("Entity set 'MvcMovieContext.Movie' is null.");
+            }
+
+            var movies = await _movieRepository.SearchMoviesAsync(searchTerm);
             return View(movies);
         }
 
