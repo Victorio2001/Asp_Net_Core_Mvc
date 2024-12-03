@@ -15,14 +15,15 @@ namespace NomDuProjet.Controllers.Movie
 {
     public class MovieController : Controller
     {
-        private readonly NomDuProjetContext _context;
+        //! inutile puisque gérer dans le repo
+        //private readonly NomDuProjetContext _context;
         private readonly IMovieRepository _movieRepository;
 
         
         //! Le contexte de base de données est utilisé dans chacune des méthodes la CRUD du contrôleur.
-        public MovieController(NomDuProjetContext context, IMovieRepository movieRepository)
+        public MovieController(/*NomDuProjetContext context,*/ IMovieRepository movieRepository)
         {
-            _context = context;
+           //_context = context;
             _movieRepository = movieRepository;
         }
 
@@ -36,19 +37,21 @@ namespace NomDuProjet.Controllers.Movie
         // GET: Movie/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            // Vérifie si l'ID est null
             if (id == null)
             {
-                return NotFound();
+                return NotFound(); // Retourne une erreur 404
             }
 
-            var caca = await _context.Movie
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (caca == null)
+            // Appelle le repository pour récupérer le film
+            var movie = await _movieRepository.GetMovieByIdAsync(id);
+            if (movie == null)
             {
-                return NotFound();
+                return NotFound(); // Retourne une erreur 404 si le film n'existe pas
             }
 
-            return View(caca);
+            // Retourne la vue avec le film
+            return View(movie);
         }
 
         // GET: Movie/Create
@@ -66,8 +69,7 @@ namespace NomDuProjet.Controllers.Movie
         {
             if (ModelState.IsValid)
             {
-                _context.Add(movie);
-                await _context.SaveChangesAsync();
+                await _movieRepository.AddMovieAsync(movie);  
                 return RedirectToAction(nameof(Index));
             }
             return View(movie);
@@ -80,8 +82,7 @@ namespace NomDuProjet.Controllers.Movie
             {
                 return NotFound();
             }
-
-            var movie = await _context.Movie.FindAsync(id);
+            var movie = await _movieRepository.GetMovieByIdAsync(id);
             if (movie == null)
             {
                 return NotFound();
@@ -105,8 +106,7 @@ namespace NomDuProjet.Controllers.Movie
             {
                 try
                 {
-                    _context.Update(movie);
-                    await _context.SaveChangesAsync();
+                    await _movieRepository.UpdateMovieAsync(movie);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -132,8 +132,7 @@ namespace NomDuProjet.Controllers.Movie
                 return NotFound();
             }
 
-            var movie = await _context.Movie
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var movie = await _movieRepository.GetMovieByIdAsync(id);
             if (movie == null)
             {
                 return NotFound();
@@ -147,13 +146,7 @@ namespace NomDuProjet.Controllers.Movie
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var movie = await _context.Movie.FindAsync(id);
-            if (movie != null)
-            {
-                _context.Movie.Remove(movie);
-            }
-
-            await _context.SaveChangesAsync();
+            await _movieRepository.DeleteMovieAsync(id);
             return RedirectToAction(nameof(Index));
         }
 

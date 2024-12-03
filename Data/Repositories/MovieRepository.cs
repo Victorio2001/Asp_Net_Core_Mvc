@@ -17,8 +17,13 @@ public class MovieRepository : IMovieRepository
             return await _context.Movie.ToListAsync();
         }
 
-        public async Task<Movie> GetMovieByIdAsync(int id)
+        public async Task<Movie?> GetMovieByIdAsync(int? id)
         {
+            //!Cette méthode effectue une requête LINQ sur la base de données en fonction du prédicat spécifié (ici m => m.Id == id).
+            //return await _context.Movie.FirstOrDefaultAsync(m => m.Id == id);
+            
+            
+            //!Cette méthode utilise le change tracker d'Entity Framework Core pour rechercher l'entité dans le contexte de suivi (cache) avant de faire une requête à la base de données.
             return await _context.Movie.FindAsync(id);
         }
 
@@ -42,5 +47,11 @@ public class MovieRepository : IMovieRepository
                 _context.Movie.Remove(movie);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public Task GetExisting(int id)
+        {
+            return  _context.Movie.Any(e => e.Id == id);
+
         }
 }
