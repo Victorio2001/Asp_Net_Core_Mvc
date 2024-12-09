@@ -40,10 +40,16 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-//! Nôtre point de Spawn.
+//? Nôtre point de Spawn-Default
 app.MapControllerRoute(
     name: "default",
     //[Controller]/[ActionName]/[Parameters]
     pattern: "{controller=Movie}/{action=Index}/{id?}"); //? Le ? de fin (dans id?) indique que le paramètre id est facultatif.
+
+//! Nôtre point de Spawn-AreaPokemon  --  https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/areas?view=aspnetcore-9.0#area-folder-structure
+app.MapAreaControllerRoute(
+    name: "MyAreaProducts",
+    areaName: "Pokemon",
+    pattern: "Pokemon/{controller=Pokemon}/{action=Index}/{id?}");
 
 app.Run();

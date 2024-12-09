@@ -29,7 +29,7 @@ namespace NomDuProjet.Controllers.Movie
         }
         
         [HttpPost]
-        public string Index(string searchTerm, bool notUsed)
+        public string Index(string searchTerm)
         {
             Console.WriteLine($"{searchTerm}");
             return "From [HttpPost]Index: filter on " + searchTerm;
@@ -37,13 +37,47 @@ namespace NomDuProjet.Controllers.Movie
 
         // GET: Movie
         [HttpGet]
-        public async Task<IActionResult> Index(string searchTerm)
+        public async Task<IActionResult> Index(string searchTerm, string movieGenre)
         {
+            
+            var chartData = new
+            {
+                Datasets = new List<object>
+                {
+                    new
+                    {
+                        Label = "Population Data",
+                        Data = new List<object>
+                        {
+                            new { x = 10, y = 20, r = 15 },
+                            new { x = 15, y = 10, r = 10 },
+                            new { x = 20, y = 30, r = 20 },
+                            new { x = 25, y = 25, r = 25 },
+                            new { x = 30, y = 15, r = 30 }
+                        },
+                        BackgroundColor = new List<string>
+                        {
+                            "rgba(255, 99, 132, 0.6)",
+                            "rgba(54, 162, 235, 0.6)",
+                            "rgba(255, 206, 86, 0.6)",
+                            "rgba(75, 192, 192, 0.6)",
+                            "rgba(153, 102, 255, 0.6)"
+                        },
+                        BorderColor = "rgba(255, 255, 255, 1)",
+                        BorderWidth = 1
+                    }
+                }
+            };
+
+            ViewData["BubbleChartData"] = chartData;  
+                
+           
             Console.WriteLine($" Controller Recherche pour : {searchTerm}");
             if (_context.Movie == null)
             {
                 return Problem("Entity set 'MvcMovieContext.Movie' is null.");
             }
+            
 
             var movies = await _movieRepository.SearchMoviesAsync(searchTerm);
             return View(movies);

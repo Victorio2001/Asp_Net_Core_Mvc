@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    var bubbleChartData = ViewData["BubbleChartData"];
 }
 
 <h1>Index</h1>
@@ -64,5 +65,37 @@
             </td>
         </tr>
 }
+<h1>Graphique</h1>
+<div style="width: 80%; margin: auto;">
+    <canvas id="bubbleChart"></canvas>
+</div>
+<script>
+    const ctx = document.getElementById('bubbleChart').getContext('2d');
+
+    const data = @Html.Raw(Json.Serialize(bubbleChartData));
+
+    const bubbleChart = new Chart(ctx, {
+        type: 'bubble',
+        data: {
+            datasets: data.Datasets
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
     </tbody>
 </table>
