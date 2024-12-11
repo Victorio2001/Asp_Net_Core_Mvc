@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using NomDuProjet.Models;
 
 namespace NomDuProjet.Data.Repositories;
@@ -12,19 +13,36 @@ public class MovieRepository : IMovieRepository
             _context = context;
         }
 
-        public async Task<IEnumerable<Movie>> SearchMoviesAsync(string searchTerm)
+        public async Task<MovieGenreViewModel> SearchMoviesWithGenresAsync(string searchTerm, string movieGenre)
         {
-            if (string.IsNullOrWhiteSpace(searchTerm))
+            
+            IQueryable<string> genreQuery = _context.Movie
+                .OrderBy(m => m.Genre)
+                .Select(m => m.Genre);
+            
+            IQueryable<Movie> moviesQuery = _context.Movie;
+
+            //!-------
+            if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                Console.WriteLine($"T'es dans le get all bouffon");
-                Console.WriteLine($" Repository GetAll Recherche pour : {searchTerm}");
-                return await GetAllMoviesAsync(); 
+                moviesQuery = moviesQuery.Where(m => m.Title != null && m.Title.ToUpper().Contains(searchTerm.ToUpper()));
             }
-            Console.WriteLine($" Repository Recherche pour : {searchTerm}");
-            return await _context.Movie
-                .Where(s => s.Title!.ToUpper().Contains(searchTerm.ToUpper()))
-                .ToListAsync(); 
+            if (!string.IsNullOrWhiteSpace(movieGenre))
+            {
+                moviesQuery = moviesQuery.Where(m => m.Genre == movieGenre);
+            }
+            //!-------
+
+            // Construction du ViewModel
+            var movieGenreVM = new MovieGenreViewModel
+            {
+                Genres = new SelectList(await genreQuery.Distinct().ToListAsync()),
+                Movies = await moviesQuery.ToListAsync()
+            };
+
+            return movieGenreVM;
         }
+
 
 
 

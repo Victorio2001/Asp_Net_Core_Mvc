@@ -70,7 +70,6 @@ namespace NomDuProjet.Controllers.Movie
             };
 
             ViewData["BubbleChartData"] = chartData;  
-                
            
             Console.WriteLine($" Controller Recherche pour : {searchTerm}");
             if (_context.Movie == null)
@@ -79,8 +78,8 @@ namespace NomDuProjet.Controllers.Movie
             }
             
 
-            var movies = await _movieRepository.SearchMoviesAsync(searchTerm);
-            return View(movies);
+            var movieGenreVM  = await _movieRepository.SearchMoviesWithGenresAsync(searchTerm, movieGenre);
+            return View(movieGenreVM);
         }
 
         // GET: Movie/Details/5

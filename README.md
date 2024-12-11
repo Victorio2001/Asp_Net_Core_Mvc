@@ -1,7 +1,11 @@
 #### https://docs.google.com/document/d/1pQ6whUMU-qRZBEJi2MilWi8ZapFWuD8kSKRJnn9XmR8/edit?u
 #### https://learn.microsoft.com/fr-fr/aspnet/core/tutorials/first-mvc-app/start-mvc?view=aspnetcore-9.0&WT.mc_id=dotnet-35129-website&tabs=visual-studio
+## Mettre en place Sql Server
+### Interface
+#### https://learn.microsoft.com/fr-fr/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16&redirectedfrom=MSDN
+### Bdd (SQL Server localement) [prendre dev]
+#### https://www.microsoft.com/fr-fr/sql-server/sql-server-downloads
 ## Commandes pour Commencer
-
 ### Créer une Nouvelle Application Web
 ```bash
 dotnet new mvc -n NomDuProjet
