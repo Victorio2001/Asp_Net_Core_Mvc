@@ -115,7 +115,7 @@ namespace NomDuProjet.Controllers.Movie
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price")] Models.Movie movie)
+        public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Models.Movie movie)
         //! Vous devez inclure dans l’attribut [Bind] uniquement les propriétés que vous souhaitez modifier.
         {
             if (ModelState.IsValid)
@@ -148,7 +148,7 @@ namespace NomDuProjet.Controllers.Movie
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken] //! utilisé pour lutter contre la falsification d’une requête. Il est associé à un jeton anti-falsification généré dans le fichier de la vue de modification
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price")] Models.Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Models.Movie movie)
         {
             if (id != movie.Id)
             {
