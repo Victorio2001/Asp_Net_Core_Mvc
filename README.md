@@ -111,3 +111,78 @@ NomDuProjet/
 ├── Views/
 │   ├── Movie/
 ```
+
+## Authentification
+### Init (Si projet déja existant)
+
+###  dependances
+```bash 
+dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore 
+dotnet add package Microsoft.AspNetCore.Identity.UI --version 8.0.0
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer 
+dotnet add package Microsoft.EntityFrameworkCore.Tools 
+
+solution -> add -> scaffold -> identity 
+```
+
+###  modifier contextDB =!dbCOntext
+```bash 
+namespace NomDuProjet.Data
+{
+    //! public class NomDuProjetContext : DbContext
+
+    public class NomDuProjetContext : IdentityDbContext
+    {
+        public NomDuProjetContext(DbContextOptions<NomDuProjetContext> options)
+            : base(options)
+        {
+        }
+```
+
+###  ajout dans program.cs
+```bash 
+
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => 
+        options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<NomDuProjetContext>();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Password settings.
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 1;
+
+    // Lockout settings.
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+
+    // User settings.
+    options.User.AllowedUserNameCharacters =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+    options.User.RequireUniqueEmail = false;
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    // Cookie settings
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+    options.LoginPath = "/Identity/Account/Login";
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+    options.SlidingExpiration = true;
+});
+
+
++++
+
+
+
+app.MapRazorPages();
+```

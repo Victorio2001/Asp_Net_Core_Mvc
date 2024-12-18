@@ -6,8 +6,6 @@ namespace NomDuProjet.Models;
 
 public class User : IdentityUser
 { 
-    [Key]
-    public int Id_utilisateur { get; set; }
     public string prenom_utilisateur { get; set; }
     public string nom_utilisateur { get; set; }
     public string mail_utilisateur { get; set; }

@@ -2,15 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using NomDuProjet.Models;
 using NomDuProjet.Models;
 
 namespace NomDuProjet.Data
 {
-    public class NomDuProjetContext : DbContext
+    public class NomDuProjetContext : IdentityDbContext
     {
-        public NomDuProjetContext (DbContextOptions<NomDuProjetContext> options)
+        public NomDuProjetContext(DbContextOptions<NomDuProjetContext> options)
             : base(options)
         {
         }
